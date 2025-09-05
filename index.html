@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Anime Gacha Simulator</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #ffcc00;
+      text-shadow: 0 0 15px #ffcc00, 0 0 25px #ff9900;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff006e, #ff6b6b);
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      margin: 10px;
+      transition: 0.2s;
+      box-shadow: 0 0 15px #ff006e;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #d1005a, #ff4d4d);
+      transform: scale(1.08);
+    }
+
+    .results {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      animation: pop 0.5s ease;
+      box-shadow: 0 0 15px rgba(255,255,255,0.2);
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .common { background: #222; color: #bbb; }
+    .rare { background: #004d7a; color: #00e0ff; box-shadow: 0 0 15px #00e0ff; }
+    .legendary { 
+      background: #ffcc00; 
+      color: #000; 
+      text-shadow: 0 0 10px #fff; 
+      box-shadow: 0 0 25px #ffcc00; 
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px #ffcc00; }
+      to { box-shadow: 0 0 30px #ffaa00; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎲 Epic Anime Gacha Simulator 🎲</h1>
+  <button onclick="summon(1)">✨ Single Summon</button>
+  <button onclick="summon(10)">💎 10x Summon</button>
+
+  <div class="results" id="results"></div>
+
+  <script>
+    const characters = {
+      common: ["Naruto (Academy Student)", "Sakura (Genin)", "Krillin", "Yamcha", "Hinata", "Choji"],
+      rare: ["Sasuke (Chuunin)", "Zoro (2 Swords)", "Levi", "Killua", "Itachi (Anbu)", "Gon (Adult)"],
+      legendary: ["Goku SSJ", "Madara Uchiha", "Gojo Satoru", "Eren (Founding Titan)", "Luffy Gear 5", "Ichigo (Final Form)"]
+    };
+
+    function summon(times) {
+      let container = document.getElementById("results");
+      container.innerHTML = ""; // reset
+
+      for (let i = 0; i < times; i++) {
+        let roll = Math.random() * 100;
+        let rarity;
+
+        if (roll < 70) {
+          rarity = "common";
+        } else if (roll < 95) {
+          rarity = "rare";
+        } else {
+          rarity = "legendary";
+        }
+
+        let char = characters[rarity][Math.floor(Math.random() * characters[rarity].length)];
+        
+        let card = document.createElement("div");
